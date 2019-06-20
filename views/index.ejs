@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <form>
+        <select name="plans" multiple>
+            <option value="10"> 10$ Per Month- Plan1</option>
+            <option value="20">20$ Per Month</option>
+            <option value="30">30$ Per Month</option>
+            <option value="40">40 $ Per Month</option>
+          </select>
+          <button onclick="getSelected()">Show selected values</button>
+    </form>
+</body>
+<script>
+function getSelected(){
+    var el = document.getElementsByTagName('select')[0];
+    var plans = getSelectValues(el);
+    event.preventDefault();
+    window.location.href = "/postdata?plans="+plans;
+}
+
+function getSelectValues(select) {
+  var result = [];
+  var options = select && select.options;
+  var opt;
+
+  for (var i=0, iLen=options.length; i<iLen; i++) {
+    opt = options[i];
+
+    if (opt.selected) {
+      result.push(opt.value || opt.text);
+    }
+  }
+  return result;
+}
+</script>
+</html>

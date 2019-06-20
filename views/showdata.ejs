@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
+    <script src="./js/canvas2image.js"></script>
+    <script src="./js/html2canvas.min.js"></script>
+</head>
+<body>
+    <div style="display:inline-block" id="data" class="test">
+        <h1> <span> Your Seleted Plan Total is: <%= total%></span></h1>
+    </div>
+    <div id="buttons">
+        <button onclick="printData()" class="btn btn-success">Print</button>
+        <button onclick="convertPDF()" class="btn btn-defualt">Download as pdf</button>
+        <button onclick="converToImage()" class="btn btn-primary">Download as Image</button>
+    </div>
+    <br>
+    <a href="/" class="btn btn-danger"> Go back</a>
+</body>
+<script>
+    function printData(){
+        $('#buttons').hide();
+        window.print();
+        $('#buttons').show();
+    }
+
+    function convertPDF(){
+        var doc = new jsPDF();
+        var specialElementHandlers = {
+            '#data': function (element, renderer) {
+                return true;
+            }
+        };
+
+        doc.fromHTML($('#data').html(), 15, 15, {
+        'width': 170,
+            'elementHandlers': specialElementHandlers
+        });
+        doc.save('sample-file.pdf');
+    }
+    function converToImage(){
+        var test = $(".test").get(0);
+        html2canvas(test).then(function(canvas) {
+            var canvasWidth = canvas.width;
+            var canvasHeight = canvas.height;
+            var img = Canvas2Image.convertToImage(canvas, canvasWidth, canvasHeight);
+            const type = "jpeg";
+            let w = $('.test').width(); // image width
+            let h = $('.test').height(); // image height
+            let f = "test"; // file name
+            Canvas2Image.saveAsImage(canvas, w, h, type, f);
+        });
+    }
+</script>
+</html>
