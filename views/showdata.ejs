@@ -12,18 +12,55 @@
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
     <script src="./js/canvas2image.js"></script>
     <script src="./js/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
-<body>
-    <div style="display:inline-block" id="data" class="test">
-        <h1> <span> Your Seleted Plan Total is: <%= total%></span></h1>
+<body class="container">
+    <h4 class="text-center text-muted"> Hi, <%= data.fname%>   <%= data.lname%> Your Receipt is here:</h4>
+    <div class="row">
+        <div id="data" class="test col-sm-8" style="margin: 10px auto;">
+            <table class="table table-hover">
+                <tr class="bg-dark text-white"> 
+                    <td>#</td>
+                    <td>Details</td>
+                </tr>
+                <tr><td><%= data.fname%>   <%= data.lname%></td>
+                    <td>Receipt No.: #<%= data.id%></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Date : #<%= data.date%></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Total: $<%= data.total%></td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div id="buttons">
-        <button onclick="printData()" class="btn btn-success">Print</button>
-        <button onclick="convertPDF()" class="btn btn-defualt">Download as pdf</button>
-        <button onclick="converToImage()" class="btn btn-primary">Download as Image</button>
+    <div class="row">
+
+        <div class="col-sm-6">
+                <a href="/" class="btn btn-danger"> Go back</a>
+        </div>            
+            <div class="col-sm-6">
+                    <div class="dropdown float-right"id="buttons">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            Download As
+                            </button>
+                            <div class="dropdown-menu">
+                                <button onclick="printData()" class="btn btn-success dropdown-item">Print Now</button>
+                                <button onclick="convertPDF()" class="btn btn-defualt dropdown-item">Download as pdf</button>
+                                <button onclick="converToImage()" class="btn btn-primary dropdown-item">Download as Image</button>
+                            </div>
+                        </div>            
+            </div>
+            
+  
     </div>
-    <br>
-    <a href="/" class="btn btn-danger"> Go back</a>
+
+   
+   
 </body>
 <script>
     function printData(){
